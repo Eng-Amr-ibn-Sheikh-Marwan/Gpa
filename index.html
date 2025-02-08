@@ -1,1 +1,667 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gpa</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 50px 0;
+        direction: rtl;
+        flex-wrap: wrap;
+        background: linear-gradient(90deg, #e3f2fd, #bbdefb);
+        color: #333;
+        user-select: none;
+    }
+.overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+}
+#message {
+        display: none;
+        position: fixed;
+        border-radius: 10px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px 50px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+}
+#message h3, #message h4 {
+  display: flex;
+  justify-content: center;
+}
+.close {
+        padding: 10px 20px;
+        margin: 0 85%;
+        color: white;
+        background: linear-gradient(to right, #007bff, #0056b3);
+        border: 2px solid #ccc;
+        cursor: pointer;
+        border: none;
+        border-radius: 25px;
+        flex-wrap: wrap;
+}
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        background: white;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+    .a1 {
+      display: flex;
+      justify-content: center;
+    }
+    #a , #a1, #a3 {
+      display: flex;
+      justify-content: center;
+      color: #007bff;
+      text-decoration: underline;
+    }
+    #choice {
+      display: flex;
+      justify-content: space-between;
+      margin: 0 200px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    th, td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: center;
+    }
+    th {
+        background-color: #007bff;
+        color: white;
+    }
+  #dataTable5 {
+    margin: 0 0 0 20px;
+}
+  #dataTable4 {
+    margin: 0 20px 0 0;
+  }
+    #dataTable input, #dataTable1 input, #dataTable2 input, #dataTable3 input, #dataTable4 input, #dataTable5 input, #dataTable6 input, #dataTable7 input {
+        width: 100%;
+        padding: 5px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        outline: none;
+        transition: 0.3s;
+    }
+    #dataTable input:focus, #dataTable1 input:focus, #dataTable2 input:focus, #dataTable3 input:focus, #dataTable4 input:focus, #dataTable5 input:focus, #dataTable6 input:focus, #dataTable7 input:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+    }
+    .control button {
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      background-color: #007bff;
+    }
+    .buttons button, .buttons1 button, .addRow {
+        background: linear-gradient(to right, #007bff, #0056b3);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .addRow1 {
+        background: linear-gradient(to right, #007bff, #0056b3);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin: 0 0 20px 0;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .buttons button:hover, .buttons1 button:hover, .addRow:hover, .addRow1 {
+        _background: linear-gradient(to right, #0056b3, #003d82);
+    }
+    .tanbeh {
+        color: red;
+        font-weight: bold;
+    }
+    .amr {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    hr {
+      margin: 25px 0 0 0;
+    }
+    #a4 {
+      border: 3px solid #ccc;
+      border-radius: 5px;
+      padding: 10px 10px 0 10px;
+      margin: 0 0 20px 0;
+    }
+</style>
 
+    </head>
+    <body>
+    <div class="container">
+      <div class="a1">
+      <h3></h3>
+      <h3>هذا الموقع خاص بطلاب كلية علوم جامعة حلوان</h3>
+      <h3></h3>
+      </div>
+      <div class="a2">
+      <h3></h3>
+      <h3>
+        صلى على سيدنا محمد
+      </h3>
+      <h3></h3>
+    </div>
+    <div class="tanbeh">
+      <p>*لو درجتك  60 أو اكثر ومكتوب التقدير (ر) يعنى راسب ف انت كدا جايب اقل من 24 أعمال سنة ويجب وضع الدرجة هنا اقل من 60 مثلا 59 حتى يتم حساب ال   gpa بطريقة صحيحة.</p>
+    </div>
+    <p class="tanbeh">
+      *امامك اختيارين إما حساب ال gpa او معرفة التقديرات عن طريق الضغط على الاختيار الذى تريده.
+    </p>
+    <div id="choice">
+    <h2 id="a" onclick="a()">حساب ال gpa</h2>
+    <h2 id="a1" onclick="a1()">معرفة التقديرات</h2>
+    </div>
+    <div id="calculatetheGpa">
+    <p class="tanbeh">
+      *الجدول الاول هو الذى يظهر فيه نتيجة البيانات التى تضعها فى الجدولين الذين هم اسفله.
+    </p>
+        <table id="dataTable1">
+            <thead>
+                <tr>
+                  <th>معدل ال gpa التراكمى</th>
+                  <th>التقدير</th>
+                  <th>
+                    <p>مجموع عدد النقاط</p>
+                    <p>(حاصل ضرب عدد الساعات فى ال gpa)</p>
+                  </th>
+                </tr>
+                <tr>
+                <td><input id="Gpa" type="button"></td>
+                <td><input id="GpaT" type="button"></td>
+                <td><input id="Point" type="button"></td>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- سيتم إضافة الصفوف هنا -->
+            </tbody>
+        </table>
+        <div class="tanbeh">
+        <p></p>
+        </div>
+    <p class="tanbeh">
+      *الجدول الثانى لوضع عدد ساعات مواد السمر.
+    </p>
+        <table id="dataTable2">
+            <thead>
+                <tr>
+                  <th>عدد ساعات مواد السمر</th>
+                  <td><input type="number"></td>
+                </tr>
+            </thead>
+        </table>
+    <p class="tanbeh">
+      *الجدول الثالث لوضع اى عدد من الدرجات وبجانبها عدد الساعات الخاص بى كل درجة.
+    </p>
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>التحكم</th>
+                    <th>الدرجة</th>
+                    <th>عدد الساعات</th>
+                    <th>gpa</th>
+                    <th>التقدير</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- سيتم إضافة الصفوف هنا -->
+            </tbody>
+        </table>
+        <div class="buttons">
+            <button class="addRow" onclick="addRow()">إضافة صف</button>
+        </div>
+        </div>
+        <div id="a4">
+    <p class="tanbeh">
+      *الجدول الاول هو الذى يظهر فيه نتيجة البيانات التى تضعها فى الجدول الذى اسفله.
+    </p>
+        <table id="dataTable6">
+            <thead>
+                <tr>
+                  <th>معدل ال gpa التراكمى</th>
+                  <th>التقدير الكلى</th>
+                </tr>
+                <tr>
+                <td><input id="gpaTotal" type="button"></td>
+                <td><input id="taqderTotal" type="button"></td>
+                </tr>
+            </thead>
+        </table>
+    <p class="tanbeh">
+      *الجدول الثانى لوضع اى عدد من المعدلات التراكمية وسيظهر مجموع المعدل التراكمى فى الجدول الذى فوقه.
+    </p>
+        <table id="dataTable7">
+            <thead>
+                <tr>
+                  <th>#</th>
+                  <th>التحكم</th>
+                  <th>ال gpa</th>
+                  <th>التقدير</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- سيتم إضافة الصفوف هنا -->
+            </tbody>
+        </table>
+        <div class="buttons">
+            <button class="addRow1" onclick="addRow1()">إضافة صف</button>
+        </div>
+        </div>
+        <div id="a3">
+        <table id="dataTable5">
+            <thead>
+                <tr>
+                    <th>ال gpa</th>
+                    <th>التقدير</th>
+                </tr>
+            </thead>
+            <thead>
+                <td><input type="number" placeholder="ال gpa" oninput="checkLength3(this); calculateAa2(this)"></td>
+                <td><input id="taqder" type="button"></td>
+            </thead>
+        </table>
+        <table id="dataTable4">
+            <thead>
+                <tr>
+                    <th>الدرجة</th>
+                    <th>gpa</th>
+                    <th>التقدير</th>
+                </tr>
+            </thead>
+            <thead>
+                <td><input type="number" placeholder="الدرجة" oninput="checkLength1(this); calculateAa1(this)"></td>
+                <td><input id="GBA" type="button"></td>
+                <td><input id="taqder" type="button"></td>
+            </thead>
+        </table>
+        </div>
+        <div class="amr" dir="rtl">
+          <p onclick="Amr()">
+                    #المهندس_عمرو_بن_الشيخ_مروان
+          </p>
+        </div>
+  <div id="message">
+    <h3>
+      من هو المهندس عمرو بن الشيخ مروان ؟!
+    </h3>
+    <h4>
+      هو طالب بكلية علوم جامعة حلوان قسم فيزياء
+    </h4>
+    <h4>
+      يحترف عمل المواقع بأحسن جودة وعمل سيستم لها بأحسن نظام بأذن الله.
+    </h4>
+    <button class="close" onclick="Close()">إغلاق</button>
+  </div>
+  <div class="overlay" id="overlay"></div>
+    </div>
+     <script>
+function Amr() {
+  message.style.display = 'block';
+  overlay.style.display = 'block';
+}
+function Close() {
+  message.style.display = 'none';
+  overlay.style.display = 'none';
+} 
+a3.style.display = 'none';
+a4.style.display = "none";
+function a() {
+  calculatetheGpa.style.display = 'block';
+  a3.style.display = 'none';
+  a4.style.display = "none";
+}
+function a1() {
+  calculatetheGpa.style.display = 'none';
+  a3.style.display = 'flex';
+  a4.style.display = "block";
+} 
+        function addRow() {
+            const table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            const rowIndex = table.rows.length;
+            newRow.innerHTML = `
+                <td>${rowIndex}</td>
+                <td class="control">
+                    <button onclick="removeRow(this)">-</button>
+                </td>
+                <td><input type="number" placeholder="الدرجة" oninput="checkLength1(this); calculateGpa(this)"></td>
+                <td><input type="number" placeholder="عدد الساعات" oninput="checkLength2(this); calculateGpa(this)"></td>
+                <td><input type="button"></td>
+                <td><input type="button"></td>
+            `;
+            updateTotalGpa();
+        }
+function checkLength1(input){
+  if (parseInt(input.value) > 100) {
+    input.value = 100;
+  }
+}
+function checkLength2(input){
+if (parseInt(input.value) > 5) {
+    input.value = 5;
+  }
+}
+function checkLength3(input){
+if (parseInt(input.value) > 4.000) {
+    input.value = 4.000.toFixed(3);
+  }
+}
+// وظيفة لحذف صف من الجدول
+        function removeRow(button) {
+            const row = button.parentElement.parentElement;
+            row.remove();
+            updateRowNumbers();
+            updateTotalGpa();
+        }
+        function updateRowNumbers() {
+            const rows = document.querySelectorAll('#dataTable tbody tr');
+            rows.forEach((row, index) => {
+                row.cells[0].textContent = index + 1;
+            });
+        }
+function calculateGpa(inputElement) {
+    const row = inputElement.closest('tr');
+    const gradeInput = row.cells[2].getElementsByTagName('input')[0].value;
+    const hoursInput = row.cells[3].getElementsByTagName('input')[0].value;
+    const gpaCell = row.cells[4].getElementsByTagName('input')[0];
+    const gradeCell = row.cells[5].getElementsByTagName('input')[0];
+    if (gradeInput) {
+        let gpa;
+        let grade;
+        if (gradeInput >= 90) {
+            gpa = 4.000;
+            grade = "+A";
+        } else if (gradeInput >= 85) {
+            gpa = 3.667;
+            grade = "A";
+        } else if (gradeInput >= 80) {
+            gpa = 3.333;
+            grade = "+B";
+        } else if (gradeInput >= 75) {
+            gpa = 3.000;
+            grade = "B";
+        } else if (gradeInput >= 70) {
+            gpa = 2.667;
+            grade = "+C";
+        } else if (gradeInput >= 65) {
+            gpa = 2.333;
+            grade = "C";
+        } else if (gradeInput >= 60) {
+            gpa = 2.000;
+            grade = "D";
+        }  else {
+            gpa = 0.000;
+            grade = "F";
+        }
+        gpaCell.value = (gpa).toFixed(3);
+        gradeCell.value = grade;
+        updateTotalGpa();
+        // Update the total GPA
+    } else {
+        gpaCell.value = '';
+        gradeCell.value = '';
+    }
+}
+function updateTotalGpa() {
+    const table = document.getElementById('dataTable');
+    const table1 = document.getElementById('dataTable2');
+    let totalGpaSum = 0;
+    let totalHours = 0;
+    let totalHours1 = 0;
+    // إذا لم تكن هناك أي صفوف في الجدول الثالث
+    if (table.rows.length <= 1) {
+        document.getElementById('Gpa').value = "0.000";
+        document.getElementById('GpaT').value = "F";
+        document.getElementById('Point').value = "0";
+        return;
+    }
+
+    for (let i = 1; i < table.rows.length; i++) {
+        const row = table.rows[i];
+        const row1 = table1.rows[0];
+        const hoursValue = parseFloat(row.cells[3].getElementsByTagName('input')[0].value) || 0;
+        const gpaValue = parseFloat(row.cells[4].getElementsByTagName('input')[0].value) || 0;
+        const hoursValue1 = parseFloat(row1.cells[1].getElementsByTagName('input')[0].value) || 0;
+        if (!isNaN(hoursValue) && !isNaN(gpaValue)) {
+            totalGpaSum += gpaValue * hoursValue;
+            totalHours += hoursValue;
+            totalHours1 = hoursValue1;
+            document.getElementById('Point').value = totalGpaSum;
+            if (totalGpaSum / (totalHours + totalHours1) == 4.000) {
+                document.getElementById('GpaT').value = '+A';
+            } else if (totalGpaSum / (totalHours + totalHours1) >= 3.667) {
+                document.getElementById('GpaT').value = 'A';
+            } else if (totalGpaSum / (totalHours + totalHours1) >= 3.333) {
+                document.getElementById('GpaT').value = '+B';
+            } else if (totalGpaSum / (totalHours + totalHours1) >= 3.000) {
+                document.getElementById('GpaT').value = 'B';
+            } else if (totalGpaSum / (totalHours + totalHours1) >= 2.667) {
+                document.getElementById('GpaT').value = '+C';
+            } else if (totalGpaSum / (totalHours + totalHours1) >= 2.333) {
+                document.getElementById('GpaT').value = 'C';
+            } else if (totalGpaSum / (totalHours + totalHours1) >= 2.000) {
+                document.getElementById('GpaT').value = 'D';
+            } else {
+                document.getElementById('GpaT').value = 'F';
+            }
+        }
+    }
+    let totalGpa = totalHours > 0 ? totalGpaSum / (totalHours + totalHours1) : 0;
+    document.getElementById('Gpa').value = totalGpa.toFixed(3);
+}
+document.querySelector('#dataTable2 input[type="number"]').addEventListener('input', updateTotalGpa);
+function calculateAa1(inputElement) {
+    const row = inputElement.closest('tr');
+    const gradeInput = row.cells[0].getElementsByTagName('input')[0].value;
+    const aa1Cell = row.cells[1].getElementsByTagName('input')[0];
+    const aa2Cell = row.cells[2].getElementsByTagName('input')[0];
+    if (gradeInput) {
+        let gpa;
+        let grade;
+        if (gradeInput >= 90) {
+            gpa = 4.000;
+            grade = "+A";
+        } else if (gradeInput >= 85) {
+            gpa = 3.667;
+            grade = "A";
+        } else if (gradeInput >= 80) {
+            gpa = 3.333;
+            grade = "+B";
+        } else if (gradeInput >= 75) {
+            gpa = 3.000;
+            grade = "B";
+        } else if (gradeInput >= 70) {
+            gpa = 2.667;
+            grade = "+C";
+        } else if (gradeInput >= 65) {
+            gpa = 2.333;
+            grade = "C";
+        } else if (gradeInput >= 60) {
+            gpa = 2.000;
+            grade = "D";
+        }  else {
+            gpa = 0.000;
+            grade = "F";
+        }
+        aa1Cell.value = (gpa).toFixed(3);
+        aa2Cell.value = grade;
+    } else {
+        aa1Cell.value = '';
+        aa2Cell.value = '';
+    }
+} 
+function calculateAa2(inputElement) {
+    const row = inputElement.closest('tr');
+    const gpaInput = row.cells[0].getElementsByTagName('input')[0].value;
+    const aa3Cell = row.cells[1].getElementsByTagName('input')[0];
+    if (gpaInput) {
+        let taqder;
+        if (gpaInput >= 4.000) {
+            taqder = "+A";
+        } else if (gpaInput >= 3.667) {
+            taqder = "A";
+        } else if (gpaInput >= 3.333) {
+            taqder = "+B";
+        } else if (gpaInput >= 3.000) {
+            taqder = "B";
+        } else if (gpaInput >= 2.667) {
+            taqder = "+C";
+        } else if (gpaInput >= 2.333) {
+            taqder = "C";
+        } else if (gpaInput >= 2.000) {
+            taqder = "D";
+        }  else {
+            taqder = "F";
+        }
+        aa3Cell.value = taqder;
+    } else {
+        aa3Cell.value = '';
+    }
+}
+function addRow1() {
+  const table = document.getElementById('dataTable7').getElementsByTagName('tbody')[0];
+  const newRow = table.insertRow();
+  const rowIndex = table.rows.length;
+  newRow.innerHTML = `
+  <td>${rowIndex}</td>
+  <td class="control">
+  <button onclick="removeRow1(this)">-</button>
+  </td>
+  <td><input type="number" placeholder="ال gpa" oninput="checkLength4(this); calculateAa3(this)"></td>
+  <td><input type="button"></td>
+  `;
+  updateTotalGpa1();
+}
+function checkLength4(input){
+  if (parseInt(input.value) > 4.000) {
+    input.value = 4.000.toFixed(3);
+  }
+}
+function removeRow1(button) {
+  const row = button.parentElement.parentElement;
+  row.remove();
+  updateRowNumbers1();
+  updateTotalGpa1();
+}
+function updateRowNumbers1() {
+  const rows = document.querySelectorAll('#dataTable7 tbody tr');
+  rows.forEach((row, index) => {
+    row.cells[0].textContent = index + 1;
+  });
+}
+function updateTotalGpa1() {
+    const table = document.getElementById('dataTable7');
+    let totalGpaSum = 0;
+    let validRowsCount = 0;
+
+    // إذا لم تكن هناك أي صفوف في الجدول الثالث
+    if (table.rows.length <= 1) {
+        document.getElementById('gpaTotal').value = "0.000";
+        document.getElementById('taqderTotal').value = "F";
+        return;
+    }
+
+    for (let i = 1; i < table.rows.length; i++) {
+        const row = table.rows[i];
+        const gpaInput = row.cells[2].getElementsByTagName('input')[0];
+        const gpaValue = parseFloat(gpaInput.value) || 0;
+
+        if (gpaInput.value.trim() !== "") { // تحقق من أن الحقل غير فارغ
+            totalGpaSum += gpaValue;
+            validRowsCount++;
+        }
+    }
+
+    if (validRowsCount > 0) {
+        const totalGpa = totalGpaSum / validRowsCount;
+        document.getElementById('gpaTotal').value = totalGpa.toFixed(3);
+
+        if (totalGpa == 4.000) {
+            document.getElementById('taqderTotal').value = '+A';
+        } else if (totalGpa >= 3.667) {
+            document.getElementById('taqderTotal').value = 'A';
+        } else if (totalGpa >= 3.333) {
+            document.getElementById('taqderTotal').value = '+B';
+        } else if (totalGpa >= 3.000) {
+            document.getElementById('taqderTotal').value = 'B';
+        } else if (totalGpa >= 2.667) {
+            document.getElementById('taqderTotal').value = '+C';
+        } else if (totalGpa >= 2.333) {
+            document.getElementById('taqderTotal').value = 'C';
+        } else if (totalGpa >= 2.000) {
+            document.getElementById('taqderTotal').value = 'D';
+        } else {
+            document.getElementById('taqderTotal').value = 'F';
+        }
+    } else {
+        document.getElementById('gpaTotal').value = "0.000";
+        document.getElementById('taqderTotal').value = "F";
+    }
+}
+document.querySelector('#dataTable7 input[type="number"]').addEventListener('input', updateTotalGpa1);
+function calculateAa3(inputElement) {
+    const row = inputElement.closest('tr');
+    const gpaInput = row.cells[2].getElementsByTagName('input')[0].value;
+    const aa3Cell = row.cells[3].getElementsByTagName('input')[0];
+    if (gpaInput) {
+        let taqder;
+        if (gpaInput >= 4.000) {
+            taqder = "+A";
+        } else if (gpaInput >= 3.667) {
+            taqder = "A";
+        } else if (gpaInput >= 3.333) {
+            taqder = "+B";
+        } else if (gpaInput >= 3.000) {
+            taqder = "B";
+        } else if (gpaInput >= 2.667) {
+            taqder = "+C";
+        } else if (gpaInput >= 2.333) {
+            taqder = "C";
+        } else if (gpaInput >= 2.000) {
+            taqder = "D";
+        }  else {
+            taqder = "F";
+        }
+        aa3Cell.value = taqder;
+    } else {
+        aa3Cell.value = '';
+    }
+    updateTotalGpa1();
+}
+     </script>
+    </body>
+ </html>
