@@ -67,11 +67,16 @@
       display: flex;
       justify-content: center;
     }
-    #a , #a3 {
+    #a , #a1, #a3 {
       display: flex;
       justify-content: center;
       color: #007bff;
       text-decoration: underline;
+    }
+    #choice {
+      display: flex;
+      justify-content: space-between;
+      margin: 0 200px;
     }
     table {
         width: 100%;
@@ -171,9 +176,19 @@
       <h3></h3>
     </div>
     <div class="tanbeh">
-      <p>* لو درجتك  60 أو اكثر ومكتوب التقدير (ر) يعنى راسب ف انت كدا جايب اقل من 24 أعمال سنة ويجب وضع الدرجة هنا اقل من 60 مثلا 59 حتى يتم حساب ال   gpa بطريقة صحيحة.</p>
+      <p>*لو درجتك  60 أو اكثر ومكتوب التقدير (ر) يعنى راسب ف انت كدا جايب اقل من 24 أعمال سنة ويجب وضع الدرجة هنا اقل من 60 مثلا 59 حتى يتم حساب ال   gpa بطريقة صحيحة.</p>
     </div>
-    <h2 id="a">حساب ال gpa</h2>
+    <p class="tanbeh">
+      *امامك اختيارين إما حساب ال gpa او معرفة التقديرات عن طريق الضغط على الاختيار الذى تريده.
+    </p>
+    <div id="choice">
+    <h2 id="a" onclick="a()">حساب ال gpa</h2>
+    <h2 id="a1" onclick="a1()">معرفة التقديرات</h2>
+    </div>
+    <div id="calculatetheGpa">
+    <p class="tanbeh">
+      *الجدول الاول هو الذى يظهر فيه نتيجة البيانات التى تضعها فى الجدولين الذين هم اسفله.
+    </p>
         <table id="dataTable1">
             <thead>
                 <tr>
@@ -197,14 +212,20 @@
         <div class="tanbeh">
         <p></p>
         </div>
+    <p class="tanbeh">
+      *الجدول الثانى لوضع عدد ساعات مواد السمر.
+    </p>
         <table id="dataTable2">
             <thead>
                 <tr>
-                  <th>مجموع عدد ساعات مواد السمر</th>
+                  <th>عدد ساعات مواد السمر</th>
                   <td><input type="number"></td>
                 </tr>
             </thead>
         </table>
+    <p class="tanbeh">
+      *الجدول الثالث لوضع اى عدد من الدرجات وبجانبها عدد الساعات الخاص بى كل درجة.
+    </p>
         <table id="dataTable">
             <thead>
                 <tr>
@@ -223,14 +244,15 @@
         <div class="buttons">
             <button class="addRow" onclick="addRow()">إضافة صف</button>
         </div>
-        <hr>
-
-        <h2 id="a">معرفة التقديرات</h2>
+        </div>
         <div id="a4">
+    <p class="tanbeh">
+      *الجدول الاول هو الذى يظهر فيه نتيجة البيانات التى تضعها فى الجدول الذى اسفله.
+    </p>
         <table id="dataTable6">
             <thead>
                 <tr>
-                  <th>gpa الكلى</th>
+                  <th>معدل ال gpa التراكمى</th>
                   <th>التقدير الكلى</th>
                 </tr>
                 <tr>
@@ -239,13 +261,16 @@
                 </tr>
             </thead>
         </table>
+    <p class="tanbeh">
+      *الجدول الثانى لوضع اى عدد من المعدلات التراكمية وسيظهر مجموع المعدل التراكمى فى الجدول الذى فوقه.
+    </p>
         <table id="dataTable7">
             <thead>
                 <tr>
                   <th>#</th>
                   <th>التحكم</th>
-                  <th>gpa الكلى</th>
-                  <th>التقدير الكلى</th>
+                  <th>ال gpa</th>
+                  <th>التقدير</th>
                 </tr>
             </thead>
             <tbody>
@@ -260,12 +285,12 @@
         <table id="dataTable5">
             <thead>
                 <tr>
-                    <th>gpa</th>
+                    <th>ال gpa</th>
                     <th>التقدير</th>
                 </tr>
             </thead>
             <thead>
-                <td><input type="number" placeholder="gpa" oninput="checkLength3(this); calculateAa2(this)"></td>
+                <td><input type="number" placeholder="ال gpa" oninput="checkLength3(this); calculateAa2(this)"></td>
                 <td><input id="taqder" type="button"></td>
             </thead>
         </table>
@@ -311,6 +336,18 @@ function Amr() {
 function Close() {
   message.style.display = 'none';
   overlay.style.display = 'none';
+} 
+a3.style.display = 'none';
+a4.style.display = "none";
+function a() {
+  calculatetheGpa.style.display = 'block';
+  a3.style.display = 'none';
+  a4.style.display = "none";
+}
+function a1() {
+  calculatetheGpa.style.display = 'none';
+  a3.style.display = 'flex';
+  a4.style.display = "block";
 } 
         function addRow() {
             const table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
