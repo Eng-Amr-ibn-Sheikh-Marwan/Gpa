@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gpa</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <style>
     body {
@@ -178,6 +179,12 @@
       </h3>
       <h3></h3>
     </div>
+    <div id="g_id_onload"
+     data-client_id="YOUR_CLIENT_ID"
+     data-callback="handleCredentialResponse">
+</div>
+<div class="g_id_signin" data-type="standard"></div>
+
     <div class="tanbeh">
       <p>*لو درجتك  60 أو اكثر ومكتوب التقدير (ر) يعنى راسب ف انت كدا جايب اقل من 24 أعمال سنة ويجب وضع الدرجة هنا اقل من 60 مثلا 59 حتى يتم حساب ال   gpa بطريقة صحيحة.</p>
     </div>
@@ -332,6 +339,25 @@
   <div class="overlay" id="overlay"></div>
     </div>
      <script>
+function handleCredentialResponse(response) {
+    // إرسال الـ ID token إلى الخادم الخاص بك للتحقق منه
+    const id_token = response.credential;
+    fetch('/auth/google', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id_token: id_token }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        // توجيه المستخدم إلى الصفحة الرئيسية أو الصفحة المطلوبة
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
 function Amr() {
   message.style.display = 'block';
   overlay.style.display = 'block';
