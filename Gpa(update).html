@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gpa(update)</title>
+    <title>حاسبة GPA - جامعة حلوان</title>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         :root {
@@ -413,19 +413,9 @@
                     </tr>
                 </thead>
             </table>
-
-
-            <table id="dataTable2">
-                <thead>
-                    <tr>
-                        <th>عدد ساعات مواد السمر</th>
-                        <td><input type="number" min="0" oninput="updateTotalGpa(); saveAllData();"></td>
-                    </tr>
-                </thead>
-            </table>
             
             <div class="tanbeh">
-                <p>* الجدول الثانى لوضع أي عدد من الدرجات وبجانبها عدد الساعات الخاصة بكل درجة.</p>
+                <p>* الجدول الثاني لوضع أي عدد من الدرجات وبجانبها عدد الساعات الخاصة بكل درجة.</p>
             </div>
             
             <table id="dataTable">
@@ -741,10 +731,8 @@
         
         function updateTotalGpa() {
             const table = document.getElementById('dataTable');
-            const table1 = document.getElementById('dataTable2');
             let totalGpaSum = 0;
             let totalHours = 0;
-            let totalHours1 = 0;
             
             if (table.rows.length <= 1) {
                 document.getElementById('Gpa').value = "0.000";
@@ -755,39 +743,40 @@
             
             for (let i = 1; i < table.rows.length; i++) {
                 const row = table.rows[i];
-                const row1 = table1.rows[0];
                 const hoursValue = parseFloat(row.cells[3].getElementsByTagName('input')[0].value) || 0;
                 const gpaValue = parseFloat(row.cells[4].getElementsByTagName('input')[0].value) || 0;
-                const hoursValue1 = parseFloat(row1.cells[1].getElementsByTagName('input')[0].value) || 0;
                 
                 if (!isNaN(hoursValue) && !isNaN(gpaValue)) {
                     totalGpaSum += gpaValue * hoursValue;
                     totalHours += hoursValue;
-                    totalHours1 = hoursValue1;
                     document.getElementById('Point').value = totalGpaSum;
                     
-                    if (totalGpaSum / (totalHours + totalHours1) == 4.000) {
-                        document.getElementById('GpaT').value = '+A';
-                    } else if (totalGpaSum / (totalHours + totalHours1) >= 3.667) {
-                        document.getElementById('GpaT').value = 'A';
-                    } else if (totalGpaSum / (totalHours + totalHours1) >= 3.333) {
-                        document.getElementById('GpaT').value = '+B';
-                    } else if (totalGpaSum / (totalHours + totalHours1) >= 3.000) {
-                        document.getElementById('GpaT').value = 'B';
-                    } else if (totalGpaSum / (totalHours + totalHours1) >= 2.667) {
-                        document.getElementById('GpaT').value = '+C';
-                    } else if (totalGpaSum / (totalHours + totalHours1) >= 2.333) {
-                        document.getElementById('GpaT').value = 'C';
-                    } else if (totalGpaSum / (totalHours + totalHours1) >= 2.000) {
-                        document.getElementById('GpaT').value = 'D';
-                    } else {
-                        document.getElementById('GpaT').value = 'F';
+                    if (totalHours > 0) {
+                        const avgGpa = totalGpaSum / totalHours;
+                        
+                        if (avgGpa == 4.000) {
+                            document.getElementById('GpaT').value = '+A';
+                        } else if (avgGpa >= 3.667) {
+                            document.getElementById('GpaT').value = 'A';
+                        } else if (avgGpa >= 3.333) {
+                            document.getElementById('GpaT').value = '+B';
+                        } else if (avgGpa >= 3.000) {
+                            document.getElementById('GpaT').value = 'B';
+                        } else if (avgGpa >= 2.667) {
+                            document.getElementById('GpaT').value = '+C';
+                        } else if (avgGpa >= 2.333) {
+                            document.getElementById('GpaT').value = 'C';
+                        } else if (avgGpa >= 2.000) {
+                            document.getElementById('GpaT').value = 'D';
+                        } else {
+                            document.getElementById('GpaT').value = 'F';
+                        }
+                        
+                        document.getElementById('Gpa').value = avgGpa.toFixed(3);
                     }
                 }
             }
             
-            let totalGpa = totalHours > 0 ? totalGpaSum / (totalHours + totalHours1) : 0;
-            document.getElementById('Gpa').value = totalGpa.toFixed(3);
             saveAllData();
         }
         
@@ -833,6 +822,8 @@
                 aa1Cell.value = "0.000";
                 aa2Cell.value = "F";
             }
+            
+            saveAllData();
         }
         
         function calculateAa2(inputElement) {
@@ -865,6 +856,8 @@
             } else {
                 aa3Cell.value = "F";
             }
+            
+            saveAllData();
         }
         
         function calculateAa3(inputElement) {
@@ -967,10 +960,6 @@
             });
             localStorage.setItem('gpaCalculator_mainTable', JSON.stringify(mainTableData));
             
-            // حفظ بيانات جدول الساعات
-            const hoursTableData = document.querySelector('#dataTable2 input').value;
-            localStorage.setItem('gpaCalculator_hoursTable', hoursTableData);
-            
             // حفظ بيانات جدول المعدلات التراكمية
             const gpaTableData = [];
             const gpaTableRows = document.querySelectorAll('#dataTable7 tbody tr');
@@ -982,7 +971,7 @@
             });
             localStorage.setItem('gpaCalculator_gpaTable', JSON.stringify(gpaTableData));
             
-            // حفظ بيانات الجداول الأخرى
+            // حفظ بيانات جدول معرفة التقديرات (dataTable4)
             const table4Data = {
                 grade: document.querySelector('#dataTable4 input[type="number"]').value,
                 gpa: document.getElementById('GBA').value,
@@ -990,6 +979,7 @@
             };
             localStorage.setItem('gpaCalculator_table4', JSON.stringify(table4Data));
             
+            // حفظ بيانات جدول معرفة التقديرات (dataTable5)
             const table5Data = {
                 gpa: document.querySelector('#dataTable5 input[type="number"]').value,
                 taqder: document.querySelector('#dataTable5 input[id="taqder"]').value
@@ -1017,13 +1007,6 @@
                 updateTotalGpa();
             }
             
-            // تحميل بيانات جدول الساعات
-            const hoursTableData = localStorage.getItem('gpaCalculator_hoursTable');
-            if (hoursTableData) {
-                document.querySelector('#dataTable2 input').value = hoursTableData;
-                updateTotalGpa();
-            }
-            
             // تحميل بيانات جدول المعدلات التراكمية
             const gpaTableData = JSON.parse(localStorage.getItem('gpaCalculator_gpaTable'));
             if (gpaTableData && gpaTableData.length > 0) {
@@ -1037,18 +1020,19 @@
                 updateTotalGpa1();
             }
             
-            // تحميل بيانات الجداول الأخرى
+            // تحميل بيانات جدول معرفة التقديرات (dataTable4)
             const table4Data = JSON.parse(localStorage.getItem('gpaCalculator_table4'));
             if (table4Data) {
-                document.querySelector('#dataTable4 input[type="number"]').value = table4Data.grade;
-                document.getElementById('GBA').value = table4Data.gpa;
-                document.querySelector('#dataTable4 input[id="taqder"]').value = table4Data.taqder;
+                document.querySelector('#dataTable4 input[type="number"]').value = table4Data.grade || '';
+                document.getElementById('GBA').value = table4Data.gpa || '0.000';
+                document.querySelector('#dataTable4 input[id="taqder"]').value = table4Data.taqder || 'F';
             }
             
+            // تحميل بيانات جدول معرفة التقديرات (dataTable5)
             const table5Data = JSON.parse(localStorage.getItem('gpaCalculator_table5'));
             if (table5Data) {
-                document.querySelector('#dataTable5 input[type="number"]').value = table5Data.gpa;
-                document.querySelector('#dataTable5 input[id="taqder"]').value = table5Data.taqder;
+                document.querySelector('#dataTable5 input[type="number"]').value = table5Data.gpa || '';
+                document.querySelector('#dataTable5 input[id="taqder"]').value = table5Data.taqder || 'F';
             }
             
             // تحميل حالة العرض
@@ -1086,12 +1070,8 @@
             const mainTableBody = document.querySelector('#dataTable tbody');
             mainTableBody.innerHTML = '';
             
-            // مسح جدول الساعات
-            document.querySelector('#dataTable2 input').value = '';
-            
             // مسح التخزين المحلي
             localStorage.removeItem('gpaCalculator_mainTable');
-            localStorage.removeItem('gpaCalculator_hoursTable');
             
             // إعادة الحساب
             updateTotalGpa();
@@ -1114,7 +1094,6 @@
             // إخفاء رسالة التأكيد
             hideConfirmation1();
         }
-      dataTable2.style.display = "none";
     </script>
 </body>
 </html>
